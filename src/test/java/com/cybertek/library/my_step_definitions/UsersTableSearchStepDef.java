@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class UsersTableSearchStepDef {
     UsersPage usersPage=new UsersPage();
@@ -48,15 +48,49 @@ public class UsersTableSearchStepDef {
         }
         List<String> idsNotSorted=new ArrayList<>(ids);
         Collections.sort(ids);
-        assertEquals(ids,idsNotSorted);
+        if(order.equals("descending")){
+            assertFalse(ids.equals(idsNotSorted));
+        }else if(order.equals("ascending")){
+            assertTrue(ids.equals(idsNotSorted));
+        }
     }
 
     @When("I click on the {string} column")
-    public void i_click_on_the_column(String string) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+    public void i_click_on_the_column(String columnName) {
+        BrowserUtils.wait(1);
+        if(columnName.equals("User ID")) {
+            usersPage.columnuserID.click();
+        }else if(columnName.equals("Email")){
+            usersPage.columnemail.click();
+        }
+    }
+    @When("I try to add new with the same email")
+    public void i_try_to_add_new_with_the_same_email() {
+        String name="Joseph Miller";
+        String password="Jmiller1234";
+        String email="abc@gmail.com";
+        BrowserUtils.wait(1);
+        usersPage.fullName.sendKeys(name);
+        BrowserUtils.wait(1);
+        usersPage.password.sendKeys(password);
+        BrowserUtils.wait(1);
+        usersPage.email.sendKeys(email);
+        BrowserUtils.wait(1);
+        usersPage.save.click();
     }
 
-//
+    @Then("Add User dialog should still be open")
+    public void add_User_dialog_should_still_be_open() {
+       assertTrue(usersPage.dialogBody.isDisplayed());
+    }
+
+    @Then("error message {string} should display")
+    public void error_message_should_display(String string) {
+
+    }
+
+
+
+
 
 }

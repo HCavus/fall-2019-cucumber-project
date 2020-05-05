@@ -34,13 +34,22 @@ public class UsersPage extends PageBase {
     @FindBy(css="a.btn-lg")
     public WebElement addUsers;
 
+    @FindBy(xpath = "//th[2]")
+    public WebElement columnuserID;
+
     @FindBy(name = "full_name")
     public WebElement fullName;
 
     @FindBy(name = "password")
     public WebElement password;
 
-    @FindBy(name = "email")
+    @FindBy(xpath = "//th[4]")
+    public WebElement columnemail;
+
+    @FindBy(xpath = "(//div[@class='modal-body'])[1]")
+    public WebElement dialogBody;
+
+    @FindBy(name="email")
     public WebElement email;
 
     @FindBy(id = "address")
